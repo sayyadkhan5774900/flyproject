@@ -16,3 +16,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/projects', 'ProjectController@index');
+    Route::get('/projects/create', 'ProjectController@create');
+    Route::post('/projects', 'ProjectController@store');
+    Route::get('/projects/{project}', 'ProjectController@show');
+
+    Route::get('/home', 'HomeController@index')->name('home');
+});
